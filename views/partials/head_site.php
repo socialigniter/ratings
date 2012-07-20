@@ -13,8 +13,6 @@ $(document).ready(function()
 			vote_data.push({'name':'type','value':$(this).data('type')});
 			vote_data.push({'name':'rating','value':$(this).data('rating')});
 
-			console.log(vote_data);
-
 			$.oauthAjax(
 			{
 				oauth 		: user_data,		
@@ -25,6 +23,8 @@ $(document).ready(function()
 			  	success		: function(result)
 			  	{
 				  	console.log(result);
+				  	$('#content_message').notify({scroll:true,status:result.status,message:result.message});									
+
 			  	}		
 			});
 		}

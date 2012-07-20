@@ -2,7 +2,7 @@
 /**
 * Name:			Social Igniter : Ratings : Install
 * Author: 		Brennan Novak
-* 		  		hi@brennannovak.com
+* 		  		contact@social-igniter.com
 * 
 * Project:		http://social-igniter.com/
 *

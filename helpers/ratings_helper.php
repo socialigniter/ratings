@@ -4,8 +4,8 @@
  *
  * @package		Ratings Helper
  * @subpackage	Helper
- * @author		Localhost
- * @link		hi@brennannovak.com
+ * @author		Brennan Novak
+ * @link		contact@social-igniter.com
  *
  * Description: This is a helper file for Ratings
  */

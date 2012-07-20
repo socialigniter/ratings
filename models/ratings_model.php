@@ -62,4 +62,13 @@ class Ratings_model extends CI_Model {
 		$rating_data['rating_id'] = $this->db->insert_id();
 		return $rating_data;	
     }
+    
+    function update_rating($rating_id, $rating_data)
+    {
+		$rating_data['updated_at'] = unix_to_mysql(now());
+		$this->db->where('rating_id', $rating_id);
+		$this->db->update('ratings', $rating_data);
+		return $this->db->get_where('ratings', array('rating_id' => $rating_id))->row();	
+    }
+    
 }

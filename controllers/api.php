@@ -83,21 +83,31 @@ class Api extends Oauth_Controller
         		'object'		=> $this->input->post('object'),
         		'object_id'		=> $this->input->post('object_id'),
         		'type'			=> $this->input->post('type'),
-    			'rating'		=> $this->input->post('rating'),
     			'ip_address'	=> $this->input->ip_address()
         	);
 			
 			// Check If Exists
 			if ($check_rating = $this->ratings_model->check_rating($rating_data))
 			{
-				$message = array('status' => 'error', 'message' => 'Oops that rating already exists');
+				// Check If Different
+				if ($check_rating->rating != $this->input->post('rating'))
+				{
+					$update = $this->ratings_model->update_rating($check_rating->rating_id, array('rating' => $this->input->post('rating')));
+		        	$message = array('status' => 'success', 'message' => 'Your rating was switched', 'rating' => $update);
+				}
+				else
+				{
+					$message = array('status' => 'error', 'message' => 'Oops that rating already exists');
+				}
 			}
 			else
 			{
-				// Insert
+				// Rating
+				$rating_data['rating'] = $this->input->post('rating');
+			
 				if ($rating = $this->ratings_model->add_rating($rating_data))
 				{
-		        	$message = array('status' => 'success', 'message' => 'Rating was recorded', 'rating' => $rating);
+		        	$message = array('status' => 'success', 'message' => 'Your rating was recorded', 'rating' => $rating);
 		        }
 		        else
 		        {
