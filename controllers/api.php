@@ -85,7 +85,7 @@ class Api extends Oauth_Controller
         		'type'			=> $this->input->post('type'),
     			'ip_address'	=> $this->input->ip_address()
         	);
-			
+
 			// Check If Exists
 			if ($check_rating = $this->ratings_model->check_rating($rating_data))
 			{
@@ -93,11 +93,11 @@ class Api extends Oauth_Controller
 				if ($check_rating->rating != $this->input->post('rating'))
 				{
 					$update = $this->ratings_model->update_rating($check_rating->rating_id, array('rating' => $this->input->post('rating')));
-		        	$message = array('status' => 'success', 'message' => 'Your rating was switched', 'rating' => $update);
+		        	$message = array('status' => 'success', 'message' => 'Your vote was switched', 'rating' => $update);
 				}
 				else
 				{
-					$message = array('status' => 'error', 'message' => 'Oops that rating already exists');
+					$message = array('status' => 'error', 'message' => 'Oops your vote already exists');
 				}
 			}
 			else
@@ -107,11 +107,11 @@ class Api extends Oauth_Controller
 			
 				if ($rating = $this->ratings_model->add_rating($rating_data))
 				{
-		        	$message = array('status' => 'success', 'message' => 'Your rating was recorded', 'rating' => $rating);
+		        	$message = array('status' => 'success', 'message' => 'Your vote was recorded', 'rating' => $rating);
 		        }
 		        else
 		        {
-			        $message = array('status' => 'error', 'message' => 'Oops could not create rating');
+			        $message = array('status' => 'error', 'message' => 'Oops could not create vote');
 		        }
 			}
 		}

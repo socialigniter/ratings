@@ -8,11 +8,13 @@
 * 
 * Description: This file is for the public Ratings Controller class
 */
-class ratings extends Site_Controller
+class Ratings extends MY_Controller
 {
     function __construct()
     {
-        parent::__construct();       
+        parent::__construct(); 
+        
+        $this->load->model('ratings/ratings_model');      
 	}
 	
 	function index()
@@ -21,20 +23,14 @@ class ratings extends Site_Controller
 		$this->render();
 	}
 
-	function view() 
+	function vote_up_down() 
 	{		
-		$this->render();
+		$rating_data['json_votes'] = json_encode($this->ratings_model->get_ratings_view('object_id', $this->uri->segment(3)));
+		
+
+		$javascript = $this->load->view('../modules/ratings/views/ratings/vote_up_down', $rating_data, TRUE);
+		$this->output->set_content_type('text/javascript')->set_output($javascript);
 	}
 	
-	/* Widgets */
-	function widgets_recent_data($widget_data)
-	{
-		// Load Template Model
-		$this->load->model('data_model');
-	
-		$widget_data['demo_data'] = $this->data_model->get_data_view();
-		
-		$this->load->view('widgets/recent_data', $widget_data);
-	}	
 	
 }

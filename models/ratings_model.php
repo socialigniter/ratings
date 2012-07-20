@@ -19,7 +19,7 @@ class Ratings_model extends CI_Model {
     
     function get_ratings_view($parameter, $value)
     {
-    	if (in_array($parameter, array('site_id', 'user_id', 'content_id', 'type', 'rating', 'ip_address')))
+    	if (in_array($parameter, array('site_id', 'user_id', 'object', 'object_id', 'type', 'rating', 'ip_address')))
     	{
 	 		$this->db->select('*');
 	 		$this->db->from('ratings');

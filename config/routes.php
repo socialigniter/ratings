@@ -8,4 +8,6 @@
 *
 * Description: 	URI Routes for Ratings for Social Igniter 
 */
-$route['ratings'] 			= 'ratings';
+$route['ratings'] 						= 'ratings';
+$route['ratings/vote_up_down/(:any)']	= 'ratings/vote_up_down/$1';
+$route['ratings/vote']					= 'ratings/index';
