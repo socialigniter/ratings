@@ -1,0 +1,1 @@
+<li><a class="sidebar_icon" href="<?= base_url() ?>home/ratings"><img src="<?= $this_module_assets ?>ratings_24.png"><span>Ratings</span></a></li>
