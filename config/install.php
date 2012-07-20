@@ -1,59 +1,68 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 /**
 * Name:			Social Igniter : Ratings : Install
-* Author: 		Localhost
+* Author: 		Brennan Novak
 * 		  		hi@brennannovak.com
-*          
+* 
 * Project:		http://social-igniter.com/
 *
-* Description: 	Installer values for Ratings for Social Igniter 
+* Description: 	Installer values for Ratings for Social Igniter
 */
 
 /* Settings */
 $config['ratings_settings']['enabled']			= 'TRUE';
-$config['ratings_settings']['create_permission'] 	= '3';
-$config['ratings_settings']['publish_permission']	= '2';
-$config['ratings_settings']['manage_permission']	= '2';
+$config['ratings_settings']['widgets']			= 'TRUE';
+$config['ratings_settings']['rate_type'] 		= 'TRUE';
 
-
-/* CUSTOM DATA */
-/* FOR CONNECTIONS */
-$config['ratings_settings']['consumer_key']	 	= '';
-$config['ratings_settings']['consumer_secret'] 	= '';
-$config['ratings_settings']['social_connection'] 	= 'TRUE';
-$config['ratings_settings']['connections_redirect']= 'settings/connections/';
-
-/* Sites */
-$config['ratings_sites'][] = array(
-	'url'		=> 'http://ratings.com/', 
-	'module'	=> 'ratings',
-	'type' 		=> 'remote', 
-	'title'		=> 'Ratings', 
-	'favicon'	=> 'http://ratings.com/favicon.ico'
+/* Ratings Table */
+$config['database_ratings_ratings_table'] = array(
+	'rating_id' => array(
+		'type' 					=> 'INT',
+		'constraint' 			=> 32,
+		'unsigned' 				=> TRUE,
+		'auto_increment'		=> TRUE
+	),
+	'site_id' => array(
+		'type'					=> 'INT',
+		'constraint'			=> 8,
+		'null'					=> TRUE
+	),
+	'user_id' => array(
+		'type'					=> 'INT',
+		'constraint'			=> 11,
+		'null'					=> TRUE
+	),
+	'object' => array(
+		'type'					=> 'CHAR',
+		'constraint'			=> 32,
+		'null'					=> TRUE
+	),
+	'object_id' => array(
+		'type'					=> 'INT',
+		'constraint'			=> 11,
+		'null'					=> TRUE
+	),
+	'type' => array(
+		'type'					=> 'VARCHAR',
+		'constraint'			=> 32,
+		'null'					=> TRUE
+	),
+	'rating' => array(
+		'type'					=> 'CHAR',
+		'constraint'			=> 8,
+		'null'					=> TRUE
+	),
+	'ip_address' => array(
+		'type'					=> 'CHAR',
+		'constraint'			=> 16,
+		'null'					=> TRUE
+	),
+	'created_at' => array(
+		'type'					=> 'DATETIME',
+		'null'					=> TRUE
+	),
+	'updated_at' => array(
+		'type'					=> 'DATETIME',
+		'null'					=> TRUE
+	)	
 );
-
-/* Data Table */
-$config['database_ratings_data_table'] = array(
-'data_id' => array(
-	'type' 					=> 'INT',
-	'constraint' 			=> 11,
-	'unsigned' 				=> TRUE,
-	'auto_increment'		=> TRUE
-),
-'user_id' => array(
-	'type' 					=> 'INT',
-	'constraint' 			=> '11',
-	'null'					=> TRUE
-),
-'text' => array(
-	'type'					=> 'TEXT',
-	'null'					=> TRUE
-),
-'created_at' => array(
-	'type'					=> 'DATETIME',
-	'default'				=> '9999-12-31 00:00:00'
-),
-'updated_at' => array(
-	'type'					=> 'DATETIME',
-	'default'				=> '9999-12-31 00:00:00'
-));

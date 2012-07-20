@@ -10,3 +10,10 @@
 */
 
 $config['ratings_path']		= 'ratings/';
+$config['ratings_type']		= array(
+	'like' 		=> 'Like',
+	'two' 		=> 'Thumbs Up / Down',
+	'five'		=> 'One to Five',
+	'ten'		=> 'One to Ten',
+	'hundred'	=> 'One to One Hundred'
+);

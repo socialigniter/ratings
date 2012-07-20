@@ -53,10 +53,11 @@ class Ratings_model extends CI_Model {
  		$result = $this->db->get()->row();
  		return $result;	      
     }
-        
+
     function add_rating($rating_data)
     {
  		$rating_data['created_at'] = unix_to_mysql(now());
+ 		$rating_data['updated_at'] = unix_to_mysql(now());
 		$this->db->insert('ratings', $rating_data);
 		$rating_data['rating_id'] = $this->db->insert_id();
 		return $rating_data;	

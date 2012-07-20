@@ -13,6 +13,8 @@ class Api extends Oauth_Controller
     function __construct()
     {
         parent::__construct();
+        
+        $this->load->model('ratings_model');
 	}
 
     /* Install App */
@@ -24,9 +26,9 @@ class Api extends Oauth_Controller
 		$this->load->dbforge();
 
 		// Create Data Table
-		$this->dbforge->add_key('data_id', TRUE);
-		$this->dbforge->add_field(config_item('database_ratings_data_table'));
-		$this->dbforge->create_table('data');
+		$this->dbforge->add_key('rating_id', TRUE);
+		$this->dbforge->add_field(config_item('database_ratings_ratings_table'));
+		$this->dbforge->create_table('ratings');
 
 		// Settings & Create Folders
 		$settings = $this->installer->install_settings('ratings', config_item('ratings_settings'));
@@ -62,9 +64,10 @@ class Api extends Oauth_Controller
 	
 	}
     
-    function create_public_post()
+    function create_vote_authd_post()
     {
-		$this->form_validation->set_rules('content_id', 'Content', 'required');
+    	$this->form_validation->set_rules('object', 'Object', 'required');
+		$this->form_validation->set_rules('object_id', 'Object Id', 'integer');
 		$this->form_validation->set_rules('type', 'Type', 'required');
 		$this->form_validation->set_rules('rating', 'Rating', 'required');
 
@@ -76,22 +79,23 @@ class Api extends Oauth_Controller
 			
         	$rating_data = array(
         		'site_id'		=> $site_id,
-        		'user_id'		=> $this->input->post('user_id'),
-        		'content_id'	=> $this->input->post('content_id'),
+        		'user_id'		=> $this->oauth_user_id,
+        		'object'		=> $this->input->post('object'),
+        		'object_id'		=> $this->input->post('object_id'),
         		'type'			=> $this->input->post('type'),
     			'rating'		=> $this->input->post('rating'),
     			'ip_address'	=> $this->input->ip_address()
         	);
 			
 			// Check If Exists
-			if ($check_rating = $this->social_tools->check_rating($rating_data))
+			if ($check_rating = $this->ratings_model->check_rating($rating_data))
 			{
 				$message = array('status' => 'error', 'message' => 'Oops that rating already exists');
 			}
 			else
 			{
 				// Insert
-				if ($rating = $this->social_tools->add_rating($rating_data))
+				if ($rating = $this->ratings_model->add_rating($rating_data))
 				{
 		        	$message = array('status' => 'success', 'message' => 'Rating was recorded', 'rating' => $rating);
 		        }
