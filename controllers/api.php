@@ -104,7 +104,7 @@ class Api extends Oauth_Controller
 			{
 				// Rating
 				$rating_data['rating'] = $this->input->post('rating');
-				$rating_data['ip_ratings'] = $this->input->ip_address();
+				$rating_data['ip_address'] = $this->input->ip_address();
 
 				if ($rating = $this->ratings_model->add_rating($rating_data))
 				{
