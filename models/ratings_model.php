@@ -7,14 +7,30 @@ class Ratings_model extends CI_Model {
         parent::__construct();
     }
     
-    function get_ratings($content_id)
+    function get_ratings($object, $object_id)
     {
  		$this->db->select('*');
- 		$this->db->from('ratings');    
-		$this->db->where('content_id', $content_id);
+ 		$this->db->from('ratings');   
+ 		$this->db->where('object', $object); 
+		$this->db->where('object_id', $object_id);
  		$this->db->order_by('created_at', 'desc'); 
  		$result = $this->db->get();	
  		return $result->result();	      
+    }
+
+    function get_ratings_count_up_down($object, $object_id)
+    {
+ 		$this->db->select('rating');
+ 		$this->db->from('ratings');   
+ 		$this->db->where(array('object' => $object, 'object_id' => $object_id, 'rating' => 'up')); 
+ 		$up = $this->db->count_all_results();
+
+ 		$this->db->select('rating');
+ 		$this->db->from('ratings');   
+ 		$this->db->where(array('object' => $object, 'object_id' => $object_id, 'rating' => 'down')); 
+ 		$down = $this->db->count_all_results();
+
+ 		return array('up' => $up, 'down' => $down);      
     }
     
     function get_ratings_view($parameter, $value)
