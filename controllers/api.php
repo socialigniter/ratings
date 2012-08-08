@@ -82,8 +82,7 @@ class Api extends Oauth_Controller
         		'user_id'		=> $this->oauth_user_id,
         		'object'		=> $this->input->post('object'),
         		'object_id'		=> $this->input->post('object_id'),
-        		'type'			=> $this->input->post('type'),
-    			'ip_address'	=> $this->input->ip_address()
+        		'type'			=> $this->input->post('type')
         	);
 
 			// Check If Exists
@@ -93,7 +92,8 @@ class Api extends Oauth_Controller
 				if ($check_rating->rating != $this->input->post('rating'))
 				{
 					$update = $this->ratings_model->update_rating($check_rating->rating_id, array('rating' => $this->input->post('rating')));
-		        	$message = array('status' => 'success', 'message' => 'Your vote was switched', 'rating' => $update);
+		        	$count = $this->ratings_model->get_ratings_count_up_down($this->input->post('object'), $this->input->post('object_id'));
+		        	$message = array('status' => 'success', 'message' => 'Your vote was switched', 'rating' => $update, 'count' => $count);
 				}
 				else
 				{
@@ -104,10 +104,12 @@ class Api extends Oauth_Controller
 			{
 				// Rating
 				$rating_data['rating'] = $this->input->post('rating');
-			
+				$rating_data['ip_ratings'] = $this->input->ip_address();
+
 				if ($rating = $this->ratings_model->add_rating($rating_data))
 				{
-		        	$message = array('status' => 'success', 'message' => 'Your vote was recorded', 'rating' => $rating);
+					$count = $this->ratings_model->get_ratings_count_up_down($this->input->post('object'), $this->input->post('object_id'));
+		        	$message = array('status' => 'success', 'message' => 'Your vote was recorded', 'rating' => $rating, 'count' => $count);
 		        }
 		        else
 		        {
