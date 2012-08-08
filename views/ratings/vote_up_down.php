@@ -1,6 +1,6 @@
 $(document).ready(function()
 {	
-	// Loop Through Votes
+	// Display Voted
 	$.each(<?= $json_votes ?>, function(key, value)
 	{
 		if (value.user_id == user_data.user_id)
